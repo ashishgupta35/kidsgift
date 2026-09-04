@@ -1,0 +1,41 @@
+---
+layout: default
+---
+<article class="block">
+  <div class="wrap">
+    <div class="post-header" style="max-width: 720px;">
+      {% if page.category %}<span class="category-pill">{{ page.category }}</span>{% endif %}
+      <h1>{{ page.title }}</h1>
+      <div class="post-meta">
+        <span>{{ page.date | date: "%B %-d, %Y" }}</span>
+        {% if page.reading_time %}<span>{{ page.reading_time }} min read</span>{% endif %}
+      </div>
+      {% if page.image %}<img src="{{ page.image | relative_url }}" alt="{{ page.title }}">{% endif %}
+    </div>
+
+    {% include affiliate-disclosure-box.html %}
+
+    <div class="post-content">
+      {{ content }}
+    </div>
+
+    {% if page.products %}
+    <div class="in-post-products wrap" style="padding-left:0; padding-right:0; max-width: 720px;">
+      <h3>Our picks from this guide</h3>
+      <div class="product-grid">
+        {% for p in page.products %}
+          {% include product-card.html
+             name=p.name
+             image=p.image
+             price=p.price
+             mrp=p.mrp
+             rating=p.rating
+             badge=p.badge
+             badge_color=p.badge_color
+             link=p.link %}
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</article>

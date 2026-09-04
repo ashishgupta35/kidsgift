@@ -1,0 +1,35 @@
+{% comment %}
+  Usage:
+  {% include product-card.html
+     name="Product name"
+     image="/assets/img/placeholder.jpg"
+     price="₹999"
+     mrp="₹1,499"
+     rating="4.5"
+     badge="Bestseller"
+     link="https://amzn.to/your-affiliate-link" %}
+{% endcomment %}
+<div class="product-card">
+  <div class="product-media">
+    {% if include.badge %}<span class="product-badge{% if include.badge_color %} {{ include.badge_color }}{% endif %}">{{ include.badge }}</span>{% endif %}
+    {% if include.image %}
+      <img src="{{ include.image | relative_url }}" alt="{{ include.name }}" loading="lazy">
+    {% else %}
+      <img src="{{ '/assets/img/placeholder.svg' | relative_url }}" alt="{{ include.name }}" loading="lazy">
+    {% endif %}
+  </div>
+  <div class="product-info">
+    <h3><a href="{{ include.link }}" target="_blank" rel="nofollow sponsored noopener">{{ include.name }}</a></h3>
+    {% if include.rating %}
+      <span class="stars" aria-label="Rated {{ include.rating }} out of 5">
+        {% assign full = include.rating | round %}
+        {% for i in (1..5) %}{% if i <= full %}★{% else %}☆{% endif %}{% endfor %}
+      </span>
+    {% endif %}
+    <div class="price-row">
+      {% if include.price %}<span class="price">{{ include.price }}</span>{% endif %}
+      {% if include.mrp %}<span class="mrp">{{ include.mrp }}</span>{% endif %}
+    </div>
+    <a class="btn btn-cta btn-block" href="{{ include.link }}" target="_blank" rel="nofollow sponsored noopener">View on Amazon</a>
+  </div>
+</div>
