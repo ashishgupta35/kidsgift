@@ -1,0 +1,26 @@
+---
+layout: default
+title: "Blog"
+permalink: /blog/
+---
+<section class="block">
+  <div class="wrap">
+    <h1>All gift guides</h1>
+    <p class="lead">Every guide we've written, newest first.</p>
+    <div class="post-list" style="margin-top: 2rem;">
+      {% for post in site.posts %}
+      <div class="post-row">
+        <div class="post-thumb">
+          {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}">{% else %}<img src="{{ '/assets/img/placeholder.svg' | relative_url }}" alt="{{ post.title }}">{% endif %}
+        </div>
+        <div>
+          {% if post.category %}<span class="category-pill">{{ post.category }}</span>{% endif %}
+          <h3 style="margin-top:0.4em;"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+          <p>{{ post.excerpt | strip_html | truncatewords: 24 }}</p>
+          <div class="post-meta"><span>{{ post.date | date: "%B %-d, %Y" }}</span></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>

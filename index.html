@@ -1,0 +1,70 @@
+---
+layout: default
+title: "Home"
+---
+<section class="hero">
+  <div class="wrap">
+    <h1>Gifts for kids, picked properly.</h1>
+    <p class="lead">We test the "would I actually buy this?" question before anything goes on a list — then link straight to where you can get it.</p>
+    <form class="hero-search" action="{{ '/blog/' | relative_url }}" method="get">
+      <input type="search" name="q" placeholder="Search gift guides…" aria-label="Search">
+      <button class="btn btn-cta" type="submit">Search</button>
+    </form>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Trending picks</h2>
+        <p>Pulled from our latest guides.</p>
+      </div>
+      <a class="btn btn-outline" href="{{ '/blog/' | relative_url }}">See all guides</a>
+    </div>
+    <div class="product-grid">
+      {% assign shown = 0 %}
+      {% for post in site.posts %}
+        {% if post.products and post.products.size > 0 and shown < 8 %}
+          {% assign p = post.products.first %}
+          {% include product-card.html
+             name=p.name
+             image=p.image
+             price=p.price
+             mrp=p.mrp
+             rating=p.rating
+             badge=p.badge
+             badge_color=p.badge_color
+             link=p.link %}
+          {% assign shown = shown | plus: 1 %}
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="block" style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <h2>Latest from the blog</h2>
+        <p>New guides, added regularly.</p>
+      </div>
+    </div>
+    <div class="post-list">
+      {% for post in site.posts limit: 6 %}
+      <div class="post-row">
+        <div class="post-thumb">
+          {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}">{% else %}<img src="{{ '/assets/img/placeholder.svg' | relative_url }}" alt="{{ post.title }}">{% endif %}
+        </div>
+        <div>
+          {% if post.category %}<span class="category-pill">{{ post.category }}</span>{% endif %}
+          <h3 style="margin-top:0.4em;"><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+          <p>{{ post.excerpt | strip_html | truncatewords: 22 }}</p>
+          <div class="post-meta"><span>{{ post.date | date: "%B %-d, %Y" }}</span></div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
